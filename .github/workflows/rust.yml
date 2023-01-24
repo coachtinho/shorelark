@@ -27,7 +27,7 @@ jobs:
       - run: cd libs/neural-network
       - uses: actions-rs/cargo@v1
         with:
-          command: check
+          command: build
 
   lint_neural_network:
     runs-on: ubuntu-latest
