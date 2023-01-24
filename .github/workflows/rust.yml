@@ -10,8 +10,11 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build_neural_network:
+  build_libs:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        crate: [neural-network]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/cache@v2
@@ -20,17 +23,20 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             target
-          key: ${{ runner.os }}-cargo-neural-network-${{ hashFiles('Cargo.lock') }}
+          key: ${{ runner.os }}-cargo-${{ matrix.crate }}-${{ hashFiles('Cargo.lock') }}
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-      - run: cd libs/neural-network
+      - run: cd libs/${{ matrix.crate }}
       - uses: actions-rs/cargo@v1
         with:
           command: build
 
-  lint_neural_network:
+  lint_libs:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        crate: [neural-network]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/cache@v2
@@ -39,19 +45,22 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             target
-          key: ${{ runner.os }}-cargo-neural-network-${{ hashFiles('Cargo.lock') }}
+          key: ${{ runner.os }}-cargo-${{ matrix.crate }}-${{ hashFiles('Cargo.lock') }}
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-      - run: cd libs/neural-network
+      - run: cd libs/${{ matrix.crate }}
       - uses: actions-rs/cargo@v1
         with:
           command: clippy
           args: -- -Dwarnings
 
-  test_neural_network:
+  test_libs:
     runs-on: ubuntu-latest
-    needs: [build_neural_network, lint_neural_network]
+    needs: [build_libs, lint_libs]
+    strategy:
+      matrix:
+        crate: [neural-network]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/cache@v2
@@ -60,11 +69,11 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             target
-          key: ${{ runner.os }}-cargo-neural-network-dev-${{ hashFiles('Cargo.lock') }}
+          key: ${{ runner.os }}-cargo-${{ matrix.crate }}-dev-${{ hashFiles('Cargo.lock') }}
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-      - run: cd libs/neural-network
+      - run: cd libs/${{ matrix.crate }}
       - uses: actions-rs/cargo@v1
         with:
           command: test
