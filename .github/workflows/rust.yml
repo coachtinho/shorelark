@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        crate: [neural-network]
+        crate: [neural-network, genetic-algorithm]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/cache@v2
@@ -37,7 +37,7 @@ jobs:
     needs: build_libs
     strategy:
       matrix:
-        crate: [neural-network]
+        crate: [neural-network, genetic-algorithm]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/cache@v2
@@ -61,7 +61,7 @@ jobs:
     needs: build_libs
     strategy:
       matrix:
-        crate: [neural-network]
+        crate: [neural-network, genetic-algorithm]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/cache@v2
