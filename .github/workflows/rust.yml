@@ -10,11 +10,12 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
+  # Libraries
   build_libs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        crate: [neural-network, genetic-algorithm]
+        crate: [neural-network, genetic-algorithm, simulation]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/cache@v2
@@ -37,7 +38,7 @@ jobs:
     needs: build_libs
     strategy:
       matrix:
-        crate: [neural-network, genetic-algorithm]
+        crate: [neural-network, genetic-algorithm, simulation]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/cache@v2
@@ -61,7 +62,7 @@ jobs:
     needs: build_libs
     strategy:
       matrix:
-        crate: [neural-network, genetic-algorithm]
+        crate: [neural-network, genetic-algorithm, simulation]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/cache@v2
