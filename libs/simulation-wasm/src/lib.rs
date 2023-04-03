@@ -40,7 +40,7 @@ impl Simulation {
 
     pub fn world(&self) -> JsValue {
         let world = World::from(self.sim.world());
-        JsValue::from_serde(&world).unwrap()
+        serde_wasm_bindgen::to_value(&world).unwrap()
     }
 
     pub fn step(&mut self) {
@@ -64,6 +64,12 @@ impl Simulation {
             stats.max_fitness(),
             stats.avg_fitness()
         )
+    }
+}
+
+impl Default for Simulation {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
