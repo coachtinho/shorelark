@@ -1,2 +1,3 @@
 /target
 libs/simulation-wasm/pkg
+www/node_modules

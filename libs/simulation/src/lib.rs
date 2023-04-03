@@ -66,18 +66,12 @@ impl Simulation {
     }
 
     /// Fast-forwards 'till the end of current generation.
-    pub fn train(&mut self, rng: &mut dyn RngCore, gens: isize) -> ga::Statistics {
-        let mut stats = Statistics::default();
-        for _ in 0..gens {
-            loop {
-                if let Some(summary) = self.step(rng) {
-                    stats = summary;
-                    break;
-                }
+    pub fn train(&mut self, rng: &mut dyn RngCore) -> ga::Statistics {
+        loop {
+            if let Some(summary) = self.step(rng) {
+                return summary;
             }
         }
-
-        stats
     }
 
     fn process_brains(&mut self) {

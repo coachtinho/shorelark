@@ -55,8 +55,8 @@ impl Simulation {
     ///       divided by the number of birds
     ///
     /// Median could also come useful!
-    pub fn train(&mut self, gens: isize) -> String {
-        let stats = self.sim.train(&mut self.rng, gens);
+    pub fn train(&mut self) -> String {
+        let stats = self.sim.train(&mut self.rng);
 
         format!(
             "min={:.2}, max={:.2}, avg={:.2}",
