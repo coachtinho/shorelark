@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 env:
   CARGO_TERM_COLOR: always
 
@@ -35,7 +40,6 @@ jobs:
 
   lint_libs:
     runs-on: ubuntu-latest
-    needs: build_libs
     strategy:
       matrix:
         crate: [neural-network, genetic-algorithm, simulation, simulation-wasm]
@@ -58,7 +62,7 @@ jobs:
 
   test_libs:
     runs-on: ubuntu-latest
-    needs: build_libs
+    needs: [build_libs, lint_libs]
     strategy:
       matrix:
         crate: [neural-network, genetic-algorithm, simulation]
@@ -81,7 +85,7 @@ jobs:
 
   build_website:
     runs-on: ubuntu-latest
-    needs: [lint_libs, test_libs]
+    needs: test_libs
     steps:
       - uses: actions/checkout@v3
       - uses: actions/cache@v2
