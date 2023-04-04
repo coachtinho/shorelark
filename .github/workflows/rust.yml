@@ -77,7 +77,7 @@ jobs:
       - name: Cargo test
         run: |
          cd libs/${{ matrix.crate }}
-         carrgo test
+         cargo test
 
   deploy:
     runs-on: ubuntu-latest
