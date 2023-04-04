@@ -8,7 +8,6 @@ mod food;
 mod world;
 
 use self::animal_individual::*;
-use ga::Statistics;
 use lib_genetic_algorithm as ga;
 use lib_neural_network as nn;
 use nalgebra as na;
